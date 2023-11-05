@@ -65,7 +65,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu  */}
-        <div className={`absolute top-0 right-0 w-full ${showMenu ? '' : 'hidden'}`}>
+        <div className={`absolute z-50 shadow-lg rounded-lg top-0 right-0 w-full duration-700 ${showMenu ? 'top-0' : 'top-[-900px]'}`}>
           <ul className="mobile flex lg:flex-row flex-col font-semibold flex-1 lg:hidden bg-[#2A2A2A] text-white">
             <p className="flex justify-end p-1"><RxCross1 onClick={handleShowMenu} className="font-bold text-3xl cursor-pointer border-2 border-solid border-white"></RxCross1></p>
             <div className="flex items-center md:gap-3 gap-1 border-r-[1px] border-r-solid border-r-gray-400 md:p-5 p-2">
