@@ -1,0 +1,31 @@
+.desktop .active{
+    color:#2A41E8;
+}
+
+.mobile .active{
+    background: #2A41E8;
+    color:#fff;
+}
+
+nav ul.desktop li{
+    font-weight: bold;
+}
+
+nav ul.desktop li:hover{
+    color:#2A41E8;
+}
+
+nav ul.mobile li a{
+    display: block;
+    border-bottom:solid #a19898 1px;
+    padding: 15px;
+}
+
+nav ul.mobile li a:hover{
+    background: #2A41E8;
+}
+
+
+nav ul.mobile li:hover{
+    color:white;
+}
