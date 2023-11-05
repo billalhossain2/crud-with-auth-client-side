@@ -8,7 +8,7 @@ import Bids from "../pages/Bids/Bids";
 import User from "../pages/User/User";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import NotFound from "../pages/NofFound/NotFound";
+import NotFound from "../pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
 {
