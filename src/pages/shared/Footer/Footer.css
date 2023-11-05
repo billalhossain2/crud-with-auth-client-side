@@ -1,0 +1,24 @@
+.social-links:hover{
+    color:#fff;
+    cursor: pointer;
+}
+
+.left-border::before{
+    content: '';
+    position: absolute;
+    top:-62px;
+    width: 1px;
+    height: 131px;
+    left:-15px;
+    background: #666262;
+}
+
+.left-border::after{
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 131px;
+    right:140px;
+    top:-62px;
+    background: #666262;
+}
