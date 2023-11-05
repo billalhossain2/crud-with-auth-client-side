@@ -1,0 +1,207 @@
+{
+    "Web Development": [
+      {
+        "Job title": "Front-End Developer",
+        "Deadline": "2023-12-01",
+        "Description": "Create responsive and interactive user interfaces using HTML, CSS, and JavaScript.",
+        "Category": "Web Development",
+        "Minimum price": 40000,
+        "Maximum price": 60000
+      },
+      {
+        "Job title": "Back-End Developer",
+        "Deadline": "2023-11-15",
+        "Description": "Build server-side applications and APIs with Python, Node.js, or Ruby on Rails.",
+        "Category": "Web Development",
+        "Minimum price": 45000,
+        "Maximum price": 70000
+      },
+      {
+        "Job title": "Full-Stack Developer",
+        "Deadline": "2023-12-10",
+        "Description": "Develop both front-end and back-end components of web applications.",
+        "Category": "Web Development",
+        "Minimum price": 55000,
+        "Maximum price": 80000
+      },
+      {
+        "Job title": "UI/UX Designer",
+        "Deadline": "2023-11-20",
+        "Description": "Design intuitive and visually appealing user interfaces for websites and apps.",
+        "Category": "Web Development",
+        "Minimum price": 45000,
+        "Maximum price": 70000
+      }
+    ],
+    "Graphic Design": [
+      {
+        "Job title": "Logo Designer",
+        "Deadline": "2023-12-05",
+        "Description": "Create unique and memorable logos for businesses and brands.",
+        "Category": "Graphic Design",
+        "Minimum price": 25000,
+        "Maximum price": 40000
+      },
+      {
+        "Job title": "Illustrator",
+        "Deadline": "2023-11-25",
+        "Description": "Produce custom illustrations for various creative projects.",
+        "Category": "Graphic Design",
+        "Minimum price": 30000,
+        "Maximum price": 50000
+      },
+      {
+        "Job title": "Packaging Designer",
+        "Deadline": "2023-12-15",
+        "Description": "Design eye-catching packaging for consumer products.",
+        "Category": "Graphic Design",
+        "Minimum price": 35000,
+        "Maximum price": 55000
+      },
+      {
+        "Job title": "Web Designer",
+        "Deadline": "2023-11-30",
+        "Description": "Create visually appealing website layouts and user interfaces.",
+        "Category": "Graphic Design",
+        "Minimum price": 30000,
+        "Maximum price": 50000
+      }
+    ],
+    "Digital Marketing": [
+      {
+        "Job title": "Social Media Manager",
+        "Deadline": "2023-12-08",
+        "Description": "Manage and grow social media accounts for businesses and brands.",
+        "Category": "Digital Marketing",
+        "Minimum price": 35000,
+        "Maximum price": 55000
+      },
+      {
+        "Job title": "SEO Specialist",
+        "Deadline": "2023-11-22",
+        "Description": "Optimize websites for search engines to improve online visibility.",
+        "Category": "Digital Marketing",
+        "Minimum price": 40000,
+        "Maximum price": 60000
+      },
+      {
+        "Job title": "Email Marketing Campaign Manager",
+        "Deadline": "2023-12-12",
+        "Description": "Plan and execute email marketing campaigns to engage customers.",
+        "Category": "Digital Marketing",
+        "Minimum price": 30000,
+        "Maximum price": 50000
+      },
+      {
+        "Job title": "PPC Advertising Specialist",
+        "Deadline": "2023-11-28",
+        "Description": "Manage pay-per-click advertising campaigns for online marketing.",
+        "Category": "Digital Marketing",
+        "Minimum price": 40000,
+        "Maximum price": 60000
+      }
+    ],
+    "Sales & Marketing": [
+      {
+        "Job title": "Sales Representative",
+        "Deadline": "2023-12-18",
+        "Description": "Promote and sell products or services to potential customers.",
+        "Category": "Sales & Marketing",
+        "Minimum price": 30000,
+        "Maximum price": 50000
+      },
+      {
+        "Job title": "Marketing Manager",
+        "Deadline": "2023-11-24",
+        "Description": "Plan and oversee marketing strategies and campaigns for a company.",
+        "Category": "Sales & Marketing",
+        "Minimum price": 45000,
+        "Maximum price": 70000
+      },
+      {
+        "Job title": "Digital Sales Specialist",
+        "Deadline": "2023-12-06",
+        "Description": "Sell digital products and services through online channels.",
+        "Category": "Sales & Marketing",
+        "Minimum price": 35000,
+        "Maximum price": 55000
+      },
+      {
+        "Job title": "Account Executive",
+        "Deadline": "2023-11-29",
+        "Description": "Manage client accounts and build strong relationships with customers.",
+        "Category": "Sales & Marketing",
+        "Minimum price": 40000,
+        "Maximum price": 60000
+      }
+    ],
+    "Writing & Translation": [
+      {
+        "Job title": "Content Writer",
+        "Deadline": "2023-12-03",
+        "Description": "Create high-quality written content for websites, blogs, and marketing materials.",
+        "Category": "Writing & Translation",
+        "Minimum price": 25000,
+        "Maximum price": 40000
+      },
+      {
+        "Job title": "Translator",
+        "Deadline": "2023-11-21",
+        "Description": "Translate documents or content between languages with accuracy.",
+        "Category": "Writing & Translation",
+        "Minimum price": 35000,
+        "Maximum price": 55000
+      },
+      {
+        "Job title": "Copyeditor",
+        "Deadline": "2023-12-11",
+        "Description": "Edit and proofread written content for grammar and style.",
+        "Category": "Writing & Translation",
+        "Minimum price": 30000,
+        "Maximum price": 50000
+      },
+      {
+        "Job title": "Technical Writer",
+        "Deadline": "2023-11-26",
+        "Description": "Create technical documentation and manuals for software and products.",
+        "Category": "Writing & Translation",
+        "Minimum price": 35000,
+        "Maximum price": 55000
+      }
+    ],
+    "Education & Training": [
+      {
+        "Job title": "Online Tutor",
+        "Deadline": "2023-12-04",
+        "Description": "Teach subjects or skills to students through online sessions.",
+        "Category": "Education & Training",
+        "Minimum price": 30000,
+        "Maximum price": 50000
+      },
+      {
+        "Job title": "Course Instructor",
+        "Deadline": "2023-11-23",
+        "Description": "Develop and deliver online courses on specific topics or subjects.",
+        "Category": "Education & Training",
+        "Minimum price": 40000,
+        "Maximum price": 60000
+      },
+      {
+        "Job title": "Language Coach",
+        "Deadline": "2023-12-13",
+        "Description": "Provide language learning and coaching sessions to students.",
+        "Category": "Education & Training",
+        "Minimum price": 35000,
+        "Maximum price": 55000
+      },
+      {
+        "Job title": "Corporate Trainer",
+        "Deadline": "2023-11-27",
+        "Description": "Conduct training programs for employees in corporate settings.",
+        "Category": "Education & Training",
+        "Minimum price": 45000,
+        "Maximum price": 70000
+      }
+    ]
+  }
+  
