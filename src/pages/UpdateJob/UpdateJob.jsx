@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import useTitle from "../../hooks/useTitle";
+import { useParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import getJobById from "../../api/getJobById";
+import { queryClient } from "../../client/queryClient";
+import updateJobApi from "../../api/updateJobApi";
+import { toast } from "react-toastify";
 
 function UpdateJob() {
   useTitle("JobFusion | Update Job")
+  const {jobId} = useParams();
+  const {isLoading, isError, error, data:updateJob} = useQuery({
+    queryKey:["CatergoryJobs"],
+    queryFn:()=>getJobById(jobId)
+  })
+  let {_id, Category, Deadline, jobType:JobType, jobTitle:JobTitle, maximumPrice, minimumPrice, location:Location, email, Description} = updateJob ? updateJob[0] : {};
+
   const [jobTitle, setJobTitle] = useState("");
   const [deadline, setDeadline] = useState(new Date());
   const [description, setDescription] = useState("");
@@ -26,7 +39,26 @@ function UpdateJob() {
   const [categoryError, setCategoryError] = useState("");
   // Add similar state and error variables for other fields
 
-  const handleSubmit = (e) => {
+  useEffect(()=>{
+    setJobTitle(JobTitle)
+    setDescription(Description)
+    setCategory(Category)
+    setMinPrice(minimumPrice)
+    setMaxPrice(maximumPrice)
+    setJobType(JobType)
+    setLocation(Location)
+  }, [JobTitle, Description, JobTitle, Category, minimumPrice, maximumPrice, JobType, Location])
+
+  //Update mutation
+const updateMutation = useMutation({
+  mutationFn:updateJobApi,
+  onSuccess:()=>{
+    //invalidate and refetch
+    queryClient.invalidateQueries({queryKey:["CatergoryJobs"]})
+  }
+})
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const form = e.target;
 
@@ -85,19 +117,25 @@ function UpdateJob() {
       isValid = false;
     }
 
-
     if (isValid) {
+      console.log("update job")
       // Submit the job data to your API or database
-      console.log("Job data:", {
+      const newJob = {
         jobTitle,
-        deadline,
-        description,
-        category,
-        minPrice,
-        maxPrice,
+        Deadline:deadline,
+        Description:description,
+        Category:category,
+        minimumPrice:minPrice,
+        maximumPrice:maxPrice,
         jobType,
-        location,
-      });
+        location
+      };
+      try {
+        const result = await updateMutation.mutateAsync({id:_id, newJob});
+        toast.success("Update was successful", {autoClose:1000})
+      } catch (error) {
+        toast.error(error.message, {autoClose:1000})
+      }
     }
 
     //reset the form fields

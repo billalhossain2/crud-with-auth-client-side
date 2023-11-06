@@ -11,6 +11,8 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../client/queryClient";
 import deleteJobApi from "../../api/deleteJobApi";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 const PostedJobCard = ({jobItem}) => {
   const {_id, Category, Deadline, Description, email, jobTitle, jobType, location, maximumPrice, minimumPrice} = jobItem || {};
   const variants = {
@@ -26,13 +28,29 @@ const PostedJobCard = ({jobItem}) => {
       queryClient.invalidateQueries({queryKey:["CatergoryJobs"]})
     }
   })
-  const handleDelete = async(jobId)=>{
-    try {
-      const result = await deleteJobMutation.mutateAsync(jobId);
-      toast.success("Deleted Job was successful", {autoClose:1000})
-    } catch (error) {
-      toast.error(error.message, {autoClose:1000})
-    }
+  const handleDelete = (jobId)=>{
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          try {
+            const result = await deleteJobMutation.mutateAsync(jobId);
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+          } catch (error) {
+            toast.error(error.message, {autoClose:1000})
+          }
+        }
+      });
   }
 
   return (
@@ -70,9 +88,11 @@ const PostedJobCard = ({jobItem}) => {
         </p>
 
         <div className="flex gap-3 mt-5">
+          <Link to={`/update-job/${_id}`}>
           <button className="bg-[#3b4edb] hover:bg-[#202758] duration-500 px-5 py-2 font-bold rounded-lg">
             <GrUpdate className="text-white text-2xl"></GrUpdate>
           </button>
+          </Link>
           <button onClick={()=>handleDelete(_id)} className="duration-500 px-5 py-2 text-white font-bold rounded-lg">
             <RiDeleteBin6Line className="text-red-600 text-2xl"></RiDeleteBin6Line>
           </button>
