@@ -17,7 +17,7 @@ function Register() {
   const [photoUrlError, setPhotoUrlError] = useState('');
 
   // User Context 
-    const {user, signupUserWithEamilAndPWD, updateUserProfile} = useContext(userContext)
+    const {user, signupUserWithEamilAndPWD, updateUserProfile, logoutUser} = useContext(userContext)
     const navigate = useNavigate();
 
   const handleNameChange = (e) => {
@@ -93,7 +93,10 @@ function Register() {
         //Update user after registration success
         updateUserProfile({displayName:name, photoURL:photoUrl})
         .then(()=>{
-          toast.success("Registration success!", {autoClose:1000})
+          //Logout user
+          logoutUser()
+          .then(()=>toast.success("Registration success!", {autoClose:1000}))
+          .catch(()=>toast.error(error.message, {autoClose:1000}))
           navigate("/login")
         })
         .catch(error=>toast.error(message.error, {autoClose:1000}))
