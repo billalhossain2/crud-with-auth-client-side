@@ -47,12 +47,12 @@ const PostedJobCard = () => {
           Design intuitive and visually appealing user interfaces for websites
           and apps.
         </p>
-        <div className="flex justify-between mt-5">
-          <button className="bg-[#3b4edb] hover:bg-[#202758] duration-500 px-5 py-2 text-white font-bold rounded-lg">
-            Update
+        <div className="flex gap-3 mt-5">
+          <button className="bg-[#3b4edb] hover:bg-[#202758] duration-500 px-5 py-2 font-bold rounded-lg">
+            <GrUpdate className="text-white text-2xl"></GrUpdate>
           </button>
-          <button className="bg-red-500 hover:bg-red-600 duration-500 px-5 py-2 text-white font-bold rounded-lg">
-            Delete
+          <button className="duration-500 px-5 py-2 text-white font-bold rounded-lg">
+            <RiDeleteBin6Line className="text-red-600 text-2xl"></RiDeleteBin6Line>
           </button>
         </div>
       </div>
