@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-function AddJob() {
+function UpdateJob() {
   const [jobTitle, setJobTitle] = useState("");
   const [deadline, setDeadline] = useState(new Date());
   const [description, setDescription] = useState("");
@@ -103,7 +103,7 @@ function AddJob() {
 
   return (
     <div className="bg-white p-8 rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Add Job</h2>
+      <h2 className="text-2xl font-semibold mb-4">Update Job</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="jobTitle" className="block text-gray-600">
@@ -253,11 +253,11 @@ function AddJob() {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
-          Add Job
+          Update
         </button>
       </form>
     </div>
   );
 }
 
-export default AddJob;
+export default UpdateJob;
