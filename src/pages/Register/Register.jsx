@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useTitle from '../../hooks/useTitle';
+import { userContext } from '../../contexts/AuthContextProvider';
+import { useContext } from 'react';
+import { toast } from 'react-toastify';
 
 function Register() {
   useTitle("JobFusion | Register")
@@ -12,6 +15,10 @@ function Register() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [photoUrlError, setPhotoUrlError] = useState('');
+
+  // User Context 
+    const {user, signupUserWithEamilAndPWD, updateUserProfile} = useContext(userContext)
+    const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -81,6 +88,19 @@ function Register() {
     if (isValid) {
       // You can now submit the registration data
       console.log('Registration data:', { name, email, password, photoUrl });
+      signupUserWithEamilAndPWD(email, password)
+      .then(user=>{
+        //Update user after registration success
+        updateUserProfile({displayName:name, photoURL:photoUrl})
+        .then(()=>{
+          toast.success("Registration success!", {autoClose:1000})
+          navigate("/login")
+        })
+        .catch(error=>toast.error(message.error, {autoClose:1000}))
+      })
+      .catch(error=>{
+        toast.error(error.message, {autoClose:1000})
+      })
     }
   };
 

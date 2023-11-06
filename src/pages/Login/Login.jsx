@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useTitle from '../../hooks/useTitle';
+import { useContext } from 'react';
+import { userContext } from '../../contexts/AuthContextProvider';
+import { toast } from 'react-toastify';
 
 function Login() {
   useTitle("JobFusion | Login")
@@ -9,6 +12,9 @@ function Login() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  //User Context
+  const {user, logInUsingGoogle, loginWithEmailPassword} = useContext(userContext)
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -24,7 +30,13 @@ function Login() {
 
   const handleGoogleSignIn = () => {
     // Google Sign-In logic here
-    console.log('Google Sign-In clicked');
+    logInUsingGoogle()
+    .then(result => {
+      toast.success("Login success!", {autoClose:1000})
+    })
+    .catch(error=>{
+      toast.error(error.message, {autoClose:1000})
+    })
   };
 
   const handleSubmit = (e) => {
@@ -50,6 +62,13 @@ function Login() {
       // email/password authentication here
       console.log('Logging in with email and password');
       console.log(email, password)
+      loginWithEmailPassword(email, password)
+      .then(result =>{
+        toast.success("Login success!", {autoClose:1000})
+      })
+      .catch(error=>{
+        toast.error(error.message, {autoClose:1000})
+      })
     }
   };
 

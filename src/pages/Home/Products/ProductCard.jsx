@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { MdOutlineUpdate, MdPriceChange } from "react-icons/md";
+import { Link } from "react-router-dom";
 const ProductCard = () => {
   const variants = {
     normal: { opacity: 1, scale: 1, x: 0, y: 0 },
@@ -7,11 +8,11 @@ const ProductCard = () => {
   };
   return (
     <motion.div
-    initial={{ opacity: 0, scale: 0.5 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.5 }}
-    whileHover='hover'
-    variants={variants}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      whileHover="hover"
+      variants={variants}
     >
       <div className="border-solid border-[1px] border-gray-300 p-3 rounded-lg space-y-3">
         <h3 className="font-bold text-xl text-gray-700">
@@ -30,9 +31,11 @@ const ProductCard = () => {
           Design intuitive and visually appealing user interfaces for websites
           and apps.
         </p>
-        <button className="bg-[#3b4edb] hover:bg-[#202758] duration-500 px-5 py-2 text-white font-bold rounded-lg">
-          Bid Now
-        </button>
+        <Link to="job-details">
+          <button className="bg-[#3b4edb] hover:bg-[#202758] duration-500 px-5 py-2 text-white font-bold rounded-lg mt-3">
+            Bid Now
+          </button>
+        </Link>
       </div>
     </motion.div>
   );
