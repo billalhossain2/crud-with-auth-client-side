@@ -71,7 +71,7 @@ const TestimonialSlider = () => {
         className="mySwiper"
       >
         {testimonialData?.map((client) => (
-          <SwiperSlide>
+          <SwiperSlide key={client.id}>
             <div className="flex justify-center items-center mb-10">
               <div className="flex flex-col justify-center items-center">
               <img

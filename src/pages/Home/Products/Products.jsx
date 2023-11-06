@@ -1,13 +1,12 @@
 import React from 'react'
 import ProductCard from './ProductCard'
 
-const Products = () => {
+const Products = ({category}) => {
   return (
-    <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-5'>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
+    <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-5'>
+      {
+        category?.map(jobItem => <ProductCard jobItem={jobItem}></ProductCard>)
+      }
     </div>
   )
 }

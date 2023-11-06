@@ -1,18 +1,21 @@
 import React from 'react'
 import useTitle from '../../hooks/useTitle'
+import { useContext } from 'react'
+import { userContext } from '../../contexts/AuthContextProvider'
 
 const User = () => {
   useTitle("JobFusion | User Profile")
+  const {user} = useContext(userContext)
   return (
     <div className="min-h-screen flex items-center justify-center">
     <div className="bg-white p-8 rounded-lg shadow-md max-w-md">
       <div className="text-center">
         <img
-          src="/path-to-your-profile-image.jpg"
+          src={user?.photoURL}
           alt="Profile Image"
           className="w-24 h-24 rounded-full mx-auto"
         />
-        <h1 className="text-2xl font-semibold mt-4">Md. Billal Hossain</h1>
+        <h1 className="text-2xl font-semibold mt-4">{user?.displayName}</h1>
         <p className="text-gray-600">Web Developer</p>
       </div>
 

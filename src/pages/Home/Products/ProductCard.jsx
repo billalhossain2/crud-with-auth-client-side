@@ -1,7 +1,16 @@
 import { motion } from "framer-motion";
 import { MdOutlineUpdate, MdPriceChange } from "react-icons/md";
 import { Link } from "react-router-dom";
-const ProductCard = () => {
+const ProductCard = ({ jobItem }) => {
+  const {
+    jobTitle,
+    Deadline,
+    Description,
+    minimumPrice,
+    maximumPrice,
+    jobType,
+    location,
+  } = jobItem || {};
   const variants = {
     normal: { opacity: 1, scale: 1, x: 0, y: 0 },
     hover: { opacity: 1, scale: 1, x: 0, y: -7 },
@@ -16,20 +25,21 @@ const ProductCard = () => {
     >
       <div className="border-solid border-[1px] border-gray-300 p-3 rounded-lg space-y-3">
         <h3 className="font-bold text-xl text-gray-700">
-          Frontend Webdeveloper
+          {jobTitle}
         </h3>
         <p className="flex items-center gap-1 text-gray-500">
-          {" "}
+          {""}
           <MdOutlineUpdate className="text-2xl"></MdOutlineUpdate>{" "}
-          <span>11/05/2023</span>
+          <span>{Deadline}</span>
         </p>
         <p className="flex items-center gap-1 text-gray-500">
           <MdPriceChange className="text-2xl"></MdPriceChange>{" "}
-          <span>$1500 - $1700</span>
+          <span>${minimumPrice}</span>
+          <span>-</span>
+          <span>${maximumPrice}</span>
         </p>
         <p className="text-gray-500">
-          Design intuitive and visually appealing user interfaces for websites
-          and apps.
+          {Description}
         </p>
         <Link to="job-details">
           <button className="bg-[#3b4edb] hover:bg-[#202758] duration-500 px-5 py-2 text-white font-bold rounded-lg mt-3">
