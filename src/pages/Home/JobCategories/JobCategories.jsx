@@ -4,12 +4,12 @@ import "react-tabs/style/react-tabs.css";
 import Products from "../Products/Products";
 import { useQuery } from "@tanstack/react-query";
 import getCategoryJobsApi from "../../../api/getCategoryJobsApi";
-import { useState } from "react";
 import getFilteredJobs from "../../../utils/getFilteredJobs";
 import Spinner from "../../../components/Spinner";
+import Error from "../../../components/Error";
 
 const JobCategories = () => {
-  const {isLoading, isError, data:jobs} = useQuery({
+  const {isLoading, isError, error, data:jobs} = useQuery({
     queryKey:["CatergoryJobs"],
     queryFn:getCategoryJobsApi,
     retry:3,
@@ -33,6 +33,7 @@ const JobCategories = () => {
           <Tab>Writting & Translation</Tab>
           <Tab>Education & Training</Tab>
         </TabList>
+        {isError && <Error error={error}></Error>}
         {isLoading && <Spinner></Spinner>}
 
         {categoryJobs?.map((category, index) => (

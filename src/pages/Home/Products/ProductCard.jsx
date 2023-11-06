@@ -3,6 +3,7 @@ import { MdOutlineUpdate, MdPriceChange } from "react-icons/md";
 import { Link } from "react-router-dom";
 const ProductCard = ({ jobItem }) => {
   const {
+    _id,
     jobTitle,
     Deadline,
     Description,
@@ -41,7 +42,7 @@ const ProductCard = ({ jobItem }) => {
         <p className="text-gray-500">
           {Description}
         </p>
-        <Link to="job-details">
+        <Link to={`job-details/${_id}`}>
           <button className="bg-[#3b4edb] hover:bg-[#202758] duration-500 px-5 py-2 text-white font-bold rounded-lg mt-3">
             Bid Now
           </button>
