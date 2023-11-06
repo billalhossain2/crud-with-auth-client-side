@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import useTitle from "../../hooks/useTitle";
 
 function AddJob() {
+  useTitle("JobFusion | Add Job")
   const [jobTitle, setJobTitle] = useState("");
   const [deadline, setDeadline] = useState(new Date());
   const [description, setDescription] = useState("");

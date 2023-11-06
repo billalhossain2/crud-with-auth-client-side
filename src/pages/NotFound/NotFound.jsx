@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {AiOutlineHome} from "react-icons/ai"
+import useTitle from '../../hooks/useTitle';
 function NotFound() {
+  useTitle("JobFusion | Not Found")
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <div className="text-center flex flex-col justify-center items-center">
