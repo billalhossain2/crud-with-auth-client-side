@@ -23,7 +23,6 @@ const TableRow = () => {
       </td>
       <td>example@gmail.com</td>
       <td>06/11/2023</td>
-      <td>$1500 - $2000</td>
       <td>Pending</td>
       <td>
       <button className="bg-[#3b4edb] px-3 py-1 font-bold text-white rounded-md">
