@@ -11,16 +11,7 @@ import { userContext } from '../../contexts/AuthContextProvider';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import useAxiosInstance from '../../hooks/useAxiosInstance';
-const deatils = {
-  "Job title": "Technical Writer",
-  "Deadline": "2023-11-26",
-  "Description": "Create technical documentation and manuals for software and products.",
-  "Category": "Writing & Translation",
-  "Minimum price": 35000,
-  "Maximum price": 55000,
-  "location":"dhaka",
-  "Job Type" : "Remote"
-}
+
 const JobDetails = () => {
   useTitle("JobFusion | Job Details")
   const {user} = useContext(userContext);
@@ -29,14 +20,11 @@ const JobDetails = () => {
 
   //get job using tanstack query
   const {isLoading, isError, error, data} = useQuery({
-    queryKey:[],
-    queryFn:async()=>{
-      const response = await axiosInstance.get(`/category-jobs/${jobId}`);
-      return response.data;
-    }
+    queryKey:["CatergoryJobs"],
+    queryFn:()=>getJobById(jobId)
   })
   const {_id, jobTitle, Category, Deadline:date, Description, email:buyerMail, jobType, location, maximumPrice, minimumPrice} = data ? data[0] : {};
-  console.log(buyerMail)
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,6 +45,8 @@ const JobDetails = () => {
       //Check user role
     const isOwner = user?.email === buyerMail;
     console.log("Matching....", isOwner)
+
+   
 
 
   if(isError){
@@ -102,12 +92,9 @@ const JobDetails = () => {
       <div className="flex flex-col space-y-2">
         <label htmlFor="deadline">Deadline</label>
         <DatePicker
-          type="date"
-          id="deadline"
-          name="deadline"
           selected={deadline}
+          onChange={(date) => setDeadline(date)}
           required
-          readOnly
           className="border-[1px] border-solid border-gray-300 rounded-md px-5 py-3"
         />
       </div>

@@ -4,8 +4,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useTitle from "../../hooks/useTitle";
 
+import { queryClient } from "../../client/queryClient";
+import { useMutation } from "@tanstack/react-query";
+import addJobApi from "../../api/addJobApi";
+import { toast } from "react-toastify";
+import { useContext } from "react";
+import { userContext } from "../../contexts/AuthContextProvider";
+
 function AddJob() {
-  useTitle("JobFusion | Add Job")
+  useTitle("JobFusion | Add Job");
+  const {user} = useContext(userContext)
   const [jobTitle, setJobTitle] = useState("");
   const [deadline, setDeadline] = useState(new Date());
   const [description, setDescription] = useState("");
@@ -26,7 +34,16 @@ function AddJob() {
   const [categoryError, setCategoryError] = useState("");
   // Add similar state and error variables for other fields
 
-  const handleSubmit = (e) => {
+  //Add Job Mutations
+  const addJobMutation = useMutation({
+    mutationFn: addJobApi,
+    onSuccess: () => {
+      //invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["CatergoryJobs"] });
+    },
+  });
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const form = e.target;
 
@@ -75,32 +92,37 @@ function AddJob() {
       isValid = false;
     }
 
-    if(!jobType){
-      setJobTypeError('Job Type is required')
+    if (!jobType) {
+      setJobTypeError("Job Type is required");
       isValid = false;
     }
 
-    if(!category){
-      setCategoryError('Category is required');
+    if (!category) {
+      setCategoryError("Category is required");
       isValid = false;
     }
-
 
     if (isValid) {
-      // Submit the job data to your API or database
-      console.log("Job data:", {
+      // Submit the job data
+      const newJob = {
         jobTitle,
-        deadline,
-        description,
-        category,
-        minPrice,
-        maxPrice,
+        Deadline:deadline,
+        Description:description,
+        Category:category,
+        minimumPrice:minPrice,
+        maximumPrice:maxPrice,
         jobType,
         location,
-      });
-    }
+        email:user?.email
+      };
 
-    //reset the form fields
+      try {
+        const result = await addJobMutation.mutateAsync(newJob);
+        toast.success("Added a new job was successful!", {autoClose:1000})
+      } catch (error) {
+        toast.error(error.message, {autoClose:1000})
+      }
+    }
   };
 
   return (
@@ -130,7 +152,9 @@ function AddJob() {
             Deadline
           </label>
           <DatePicker
-            className={`w-full p-2 border ${deadlineError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full p-2 border ${
+              deadlineError ? "border-red-500" : "border-gray-300"
+            }`}
             selected={deadline}
             onChange={(date) => setDeadline(date)}
           />
@@ -162,7 +186,9 @@ function AddJob() {
           <select
             id="category"
             name="category"
-            className={`w-full p-2 border ${categoryError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full p-2 border ${
+              categoryError ? "border-red-500" : "border-gray-300"
+            }`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -174,7 +200,9 @@ function AddJob() {
             <option value="Education & Training">Education & Training</option>
             <option value="Education & Training">Education & Training</option>
           </select>
-          {categoryError && <p className="text-red-500 text-sm">{categoryError}</p>}
+          {categoryError && (
+            <p className="text-red-500 text-sm">{categoryError}</p>
+          )}
         </div>
         <div className="mb-4">
           <label htmlFor="minPrice" className="block text-gray-600">
@@ -219,7 +247,9 @@ function AddJob() {
           <select
             id="job-type"
             name="jobType"
-            className={`w-full p-2 border ${jobTypeError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full p-2 border ${
+              jobTypeError ? "border-red-500" : "border-gray-300"
+            }`}
             value={jobType}
             onChange={(e) => setJobType(e.target.value)}
           >
@@ -231,7 +261,9 @@ function AddJob() {
             <option value="On-Site">On-Site</option>
             <option value="Contract">Contract</option>
           </select>
-          {jobTypeError && <p className="text-red-500 text-sm">{jobTypeError}</p>}
+          {jobTypeError && (
+            <p className="text-red-500 text-sm">{jobTypeError}</p>
+          )}
         </div>
         <div className="mb-4">
           <label htmlFor="location" className="block text-gray-600">
