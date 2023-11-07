@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useTitle from '../../hooks/useTitle';
 import { useContext } from 'react';
 import { userContext } from '../../contexts/AuthContextProvider';
@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 
 function Login() {
   useTitle("JobFusion | Login")
+  const navigate = useNavigate()
+  const from = useLocation()?.state?.from || "/";
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -33,6 +35,7 @@ function Login() {
     logInUsingGoogle()
     .then(result => {
       toast.success("Login success!", {autoClose:1000})
+      navigate(from)
     })
     .catch(error=>{
       toast.error(error.message, {autoClose:1000})
@@ -65,6 +68,7 @@ function Login() {
       loginWithEmailPassword(email, password)
       .then(result =>{
         toast.success("Login success!", {autoClose:1000})
+        navigate(from)
       })
       .catch(error=>{
         toast.error(error.message, {autoClose:1000})

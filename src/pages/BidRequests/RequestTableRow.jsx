@@ -95,7 +95,7 @@ const RequestTableRow = ({ request }) => {
       :
       (
         <td>
-          <p className="font-bold text-green-600">in progress</p>
+          <p className="font-bold text-green-600">Completed</p>
         </td>
       )
     }

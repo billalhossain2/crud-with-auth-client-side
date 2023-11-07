@@ -76,7 +76,7 @@ const JobDetails = () => {
       buyerEmail:buyerMail,
       location:location,
       jobType:jobType,
-      status:'pending'
+      status:'Pending'
     }
 
     try {
