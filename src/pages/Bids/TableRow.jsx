@@ -26,7 +26,7 @@ const TableRow = ({bid}) => {
       <td>{deadline}</td>
       <td>{status}</td>
       <td>
-      <button className="bg-[#3b4edb] px-3 py-1 font-bold text-white rounded-md">
+      <button disabled={status === "pending" ? true : false} className={`px-3 py-1 font-bold text-white rounded-md duration-300 ${status === "pending" ? "bg-blue-300" : "bg-blue-600 hover:bg-blue-900"}`}>
         Complete
       </button>
     </td>

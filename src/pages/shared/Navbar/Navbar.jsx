@@ -15,12 +15,12 @@ const Navbar = () => {
 
   const hanleLogout = () => {
     logoutUser()
-    .then(()=>{
-      toast.success("Logout success", {autoClose:1000})
-    })
-    .catch(error=>{
-      toast.error(error.message, {autoClose:1000})
-    })
+      .then(() => {
+        toast.success("Logout success", { autoClose: 1000 });
+      })
+      .catch((error) => {
+        toast.error(error.message, { autoClose: 1000 });
+      });
   };
 
   const navList = (
@@ -28,7 +28,19 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
+      {/* <li>
+        <NavLink to="/about">About</NavLink>
+      </li>
       <li>
+        <NavLink to="/contact">Contact</NavLink>
+      </li>
+      <li>
+        <NavLink to="/blogs">Blogs</NavLink>
+      </li> */}
+     {
+      user && (
+        <>
+         <li>
         <NavLink to="/add-job">Add Job</NavLink>
       </li>
       <li>
@@ -40,13 +52,20 @@ const Navbar = () => {
       <li>
         <NavLink to="/bid-requests">Bid Requests</NavLink>
       </li>
+        </>
+      )
+     }
     </>
   );
   const userNavList = user ? (
     <>
       <li>
         <NavLink to="/user">
-          <img className="w-10 h-10 rounded-full border-solid border-2 border-[#2A41E8] p-1" src={user.photoURL} alt="" />
+          <img
+            className="w-10 h-10 rounded-full border-solid border-2 border-[#2A41E8] p-1"
+            src={user.photoURL}
+            alt=""
+          />
         </NavLink>
       </li>
       <li>
