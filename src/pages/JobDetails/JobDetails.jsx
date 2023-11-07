@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useTitle from '../../hooks/useTitle'
 import DatePicker from "react-datepicker";
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import getJobById from '../../api/getJobById';
 import Spinner from '../../components/Spinner';
 import Error from '../../components/Error';
@@ -11,12 +11,23 @@ import { userContext } from '../../contexts/AuthContextProvider';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import useAxiosInstance from '../../hooks/useAxiosInstance';
+import addBidApi from '../../api/addBidApi';
+import { queryClient } from '../../client/queryClient';
 
 const JobDetails = () => {
   useTitle("JobFusion | Job Details")
   const {user} = useContext(userContext);
   const axiosInstance = useAxiosInstance()
   const {jobId} = useParams();
+
+  //Add bid mutation
+  const addBidMutation = useMutation({
+    mutationFn:addBidApi,
+    onSuccess:()=>{
+      //invalidate and refetch
+      queryClient.invalidateQueries({queryKey:["CatergoryJobs"]})
+    }
+  })
 
   //get job using tanstack query
   const {isLoading, isError, error, data} = useQuery({
@@ -25,28 +36,17 @@ const JobDetails = () => {
   })
   const {_id, jobTitle, Category, Deadline:date, Description, email:buyerMail, jobType, location, maximumPrice, minimumPrice} = data ? data[0] : {};
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!price || !deadline || !email || !buyerMail) {
-      return toast.error("All fields are requred!", {autoClose:1000})
-    }
-
-    // Add your form submission logic here
-    // You can access the input values in `price`, `deadline`, `email`, and `buyerMail`
-    console.log(price, deadline, email, buyerMail)
-  };
-
   const [price, setPrice] = useState('');
   const [deadline, setDeadline] = useState(new Date());
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState();
+  const [priceError, setPriceError] = useState("");
+
+  useEffect(()=>{
+    setEmail(user?.email)
+  }, [user])
 
       //Check user role
     const isOwner = user?.email === buyerMail;
-    console.log("Matching....", isOwner)
-
-   
 
 
   if(isError){
@@ -58,9 +58,46 @@ const JobDetails = () => {
   }
 
 
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+
+    setPriceError("");
+    if(price > maximumPrice){
+      return setPriceError("Your bid amount should not be greater than maximum price")
+    }else if(price < minimumPrice){
+      return setPriceError("Your bid amount should be greater than minimum price");
+    }
+
+    if (!price || !deadline) {
+      return toast.error("All fields are requred!", {autoClose:1000})
+    }
+
+    // Add your form submission logic here
+    // You can access the input values in `price`, `deadline`, `email`, and `buyerMail`
+    console.log(price, deadline, email, buyerMail)
+    const newBid = {
+      title:jobTitle,
+      price:price,
+      deadline:deadline,
+      bidderEmail:email,
+      buyerEmail:buyerMail,
+      location:location,
+      jobType:jobType,
+      status:'pending'
+    }
+    
+    try {
+      const result = await addBidMutation.mutateAsync(newBid)
+      toast.success("Added a new bid successfully", {autoClose:1000})
+    } catch (error) {
+      toast.error(error.message, {autoClose:1000})
+    }
+  };
+
+
   return (
     <div className='my-10'>
-       <div>
+       <div className='border-solid border-2 hover:border-blue-300 max-w-[300px] p-3 rounded-lg space-y-2'>
         <h3><span className='font-bold'>Job Title:</span> <span>{jobTitle}</span> </h3>
         <p><span className='font-bold'>Deadline:</span> <span>{date}</span></p>
         <p><span className='font-bold'>Category:</span> <span>{Category}</span></p>
@@ -85,8 +122,9 @@ const JobDetails = () => {
           onChange={(e) => setPrice(e.target.value)}
           required
           placeholder='Enter your bid amount $'
-          className="border-[1px] border-solid border-gray-300 rounded-md px-5 py-3"
+          className={`border-[1px] border-solid rounded-md px-5 py-3 ${priceError ? 'border-red-500' : 'border-gray-300'}`}
         />
+        {priceError && <p className='text-red-500'>{priceError}</p>}
       </div>
 
       <div className="flex flex-col space-y-2">
@@ -100,12 +138,13 @@ const JobDetails = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Your Email</label>
         <input
           type="email"
           id="email"
           name="email"
           value={email}
+          readOnly
           onChange={(e)=>setEmail(e.target.value)}
           placeholder='Your email'
           required
