@@ -129,6 +129,19 @@ function AddJob() {
     <div className="bg-white p-8 rounded shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Add Job</h2>
       <form onSubmit={handleSubmit}>
+      <div className="mb-4">
+          <label htmlFor="jobTitle" className="block text-gray-600">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className={`w-full p-2 border border-gray-300`}
+            value={user?.email}
+            readOnly
+          />
+        </div>
         <div className="mb-4">
           <label htmlFor="jobTitle" className="block text-gray-600">
             Job Title

@@ -47,7 +47,8 @@ function UpdateJob() {
     setMaxPrice(maximumPrice)
     setJobType(JobType)
     setLocation(Location)
-  }, [JobTitle, Description, JobTitle, Category, minimumPrice, maximumPrice, JobType, Location])
+  }, [JobTitle, Description, JobTitle, Category, minimumPrice, maximumPrice, JobType, Location, email])
+  console.log("Update Email========> ", email)
 
   //Update mutation
 const updateMutation = useMutation({
@@ -128,7 +129,8 @@ const updateMutation = useMutation({
         minimumPrice:minPrice,
         maximumPrice:maxPrice,
         jobType,
-        location
+        location,
+        email
       };
       try {
         const result = await updateMutation.mutateAsync({id:_id, newJob});
@@ -145,6 +147,19 @@ const updateMutation = useMutation({
     <div className="bg-white p-8 rounded shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Update Job</h2>
       <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="jobTitle" className="block text-gray-600">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className={`w-full p-2 border border-gray-300`}
+            value={email}
+            readOnly
+          />
+        </div>
         <div className="mb-4">
           <label htmlFor="jobTitle" className="block text-gray-600">
             Job Title

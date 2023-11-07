@@ -61,13 +61,6 @@ const JobDetails = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    setPriceError("");
-    if(price > maximumPrice){
-      return setPriceError("Your bid amount should not be greater than maximum price")
-    }else if(price < minimumPrice){
-      return setPriceError("Your bid amount should be greater than minimum price");
-    }
-
     if (!price || !deadline) {
       return toast.error("All fields are requred!", {autoClose:1000})
     }
@@ -79,13 +72,13 @@ const JobDetails = () => {
       title:jobTitle,
       price:price,
       deadline:deadline,
-      bidderEmail:email,
+      bidderEmail:user?.email,
       buyerEmail:buyerMail,
       location:location,
       jobType:jobType,
       status:'pending'
     }
-    
+
     try {
       const result = await addBidMutation.mutateAsync(newBid)
       toast.success("Added a new bid successfully", {autoClose:1000})
@@ -122,9 +115,8 @@ const JobDetails = () => {
           onChange={(e) => setPrice(e.target.value)}
           required
           placeholder='Enter your bid amount $'
-          className={`border-[1px] border-solid rounded-md px-5 py-3 ${priceError ? 'border-red-500' : 'border-gray-300'}`}
+          className="border-[1px] border-solid rounded-md px-5 py-3 border-gray-300"
         />
-        {priceError && <p className='text-red-500'>{priceError}</p>}
       </div>
 
       <div className="flex flex-col space-y-2">
@@ -138,7 +130,7 @@ const JobDetails = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label htmlFor="email">Your Email</label>
+        <label htmlFor="email">Your Email (Bidder)</label>
         <input
           type="email"
           id="email"
@@ -153,7 +145,7 @@ const JobDetails = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label htmlFor="buyerMail">Buyer Email</label>
+        <label htmlFor="buyerMail">Buyer Email (Job Owner)</label>
         <input
           type="email"
           id="buyerMail"

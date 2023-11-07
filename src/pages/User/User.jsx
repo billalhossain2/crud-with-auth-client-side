@@ -16,6 +16,7 @@ const User = () => {
           className="w-24 h-24 rounded-full mx-auto"
         />
         <h1 className="text-2xl font-semibold mt-4">{user?.displayName}</h1>
+        <p className="text-gray-600 font-bold">{user?.email}</p>
         <p className="text-gray-600">Web Developer</p>
       </div>
 
