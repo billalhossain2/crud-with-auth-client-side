@@ -28,7 +28,7 @@ window.addEventListener('scroll', toggleVisible);
 
 return ( 
 	<button className='bg-blue-600 hover:bg-blue-800 rounded-full p-3 m-3'> 
-	<FaArrowUp className='text-5xl  text-white' onClick={scrollToTop} 
+	<FaArrowUp className='text-4xl  text-white' onClick={scrollToTop} 
 	    style={{display: visible ? 'inline' : 'none'}} /> 
 	</button> 
 ); 

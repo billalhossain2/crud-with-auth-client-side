@@ -2,13 +2,17 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { RxCross1 } from "react-icons/rx";
+import { RxAlignCenterVertically, RxCross1 } from "react-icons/rx";
 import { useContext } from "react";
 import { userContext } from "../../../contexts/AuthContextProvider";
 import { toast } from "react-toastify";
+import {BsMoonStars, BsSun} from "react-icons/bs"
+import { themeContext } from "../../../contexts/ThemeContextProvider";
+
 const Navbar = () => {
   const { user, logoutUser } = useContext(userContext);
   const [showMenu, setShowMenu] = useState(false);
+  const {isDark, setIsDark} = useContext(themeContext)
   const navigate = useNavigate()
   const handleShowMenu = () => {
     setShowMenu(!showMenu);
@@ -24,6 +28,10 @@ const Navbar = () => {
         toast.error(error.message, { autoClose: 1000 });
       });
   };
+
+  const handleThemeToggle = ()=>{
+    setIsDark(!isDark)
+  }
 
   const navList = (
     <>
@@ -73,6 +81,13 @@ const Navbar = () => {
       <li>
         <button onClick={hanleLogout}>Logout</button>
       </li>
+      <li>
+        {
+          isDark ?
+          <BsMoonStars onClick={handleThemeToggle} className="md:text-3xl text-2xl cursor-pointer"></BsMoonStars>:
+          <BsSun onClick={handleThemeToggle} className="md:text-3xl text-2xl cursor-pointer"></BsSun>
+        }
+    </li>
     </>
   ) : (
    <>
@@ -82,10 +97,17 @@ const Navbar = () => {
     <li className="desktop">
       <NavLink to="/register">Register</NavLink>
     </li>
+    <li>
+        {
+          isDark ?
+          <BsMoonStars onClick={handleThemeToggle} className="md:text-3xl text-2xl cursor-pointer"></BsMoonStars>:
+          <BsSun onClick={handleThemeToggle} className="md:text-3xl text-2xl cursor-pointer"></BsSun>
+        }
+    </li>
    </>
   );
   return (
-    <div className="relative">
+    <div className={`relative ${isDark ? 'text-white' : ''}`}>
       <nav className="flex items-center shadow-lg">
         <Link to="/">
           <div className="flex items-center md:gap-3 gap-1 border-r-[1px] border-r-solid border-r-gray-400 md:p-5 p-2">

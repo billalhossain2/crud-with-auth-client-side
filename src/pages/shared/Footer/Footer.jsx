@@ -3,9 +3,12 @@ import {FaFacebookF, FaTwitter, FaLinkedinIn} from "react-icons/fa"
 import {BiLogoGoogle} from "react-icons/bi"
 import { Link, NavLink } from "react-router-dom";
 import ScrollButton from "../../../components/ScrollButton";
+import { useContext } from "react";
+import { themeContext } from "../../../contexts/ThemeContextProvider";
 const Footer = () => {
+  const {isDark, setIsDark} = useContext(themeContext)
   return (
-    <div className="bg-[#303030] text-white">
+    <div className="text-white bg-gray-950 relative">
       {/* header  */}
       <header className="flex md:pb-0 py-10 md:flex-row gap-8 flex-col md:items-center border-b-[1px] border-solid border-gray-600 px-5">
         <div className="flex items-center md:gap-3 gap-1 md:p-5 p-2 flex-1">
@@ -84,7 +87,7 @@ const Footer = () => {
       <footer className="text-center text-gray-300 border-t-[1px] border-solid border-gray-600 py-10">
         <p>© {new Date().getFullYear()} <span className="text-gray-100 font-bold">JobFusion.</span> All Rights Reserved.</p>
       </footer>
-      <div className="flex justify-end"><ScrollButton></ScrollButton></div>
+      <div className="absolute bottom-0 right-0"><ScrollButton></ScrollButton></div>
     </div>
   );
 };
