@@ -1,6 +1,8 @@
 import "./Footer.css";
 import {FaFacebookF, FaTwitter, FaLinkedinIn} from "react-icons/fa"
 import {BiLogoGoogle} from "react-icons/bi"
+import { Link, NavLink } from "react-router-dom";
+import ScrollButton from "../../../components/ScrollButton";
 const Footer = () => {
   return (
     <div className="bg-[#303030] text-white">
@@ -57,12 +59,12 @@ const Footer = () => {
         </nav>
         <nav className="text-gray-300 text-[17px]">
           <header className="text-gray-200 text-2xl mb-1">Account</header>
-          <a className="link link-hover">Log In</a>
+          <NavLink to="/login" className="link link-hover">Log In</NavLink>
           <a className="link link-hover">My Account</a>
         </nav>
         <form>
           <header className="text-gray-200 text-2xl mb-1">Sign Up For a Newsletter</header>
-          <fieldset className="form-control lg:80 w-60">
+          <fieldset className="form-control lg:w-80 w-60">
             <label className="label">
               <span className="label-text text-gray-300 text-[17px] mb-3">Weekly breaking news, analysis and cutting edge advices on job searching.</span>
             </label>
@@ -82,6 +84,7 @@ const Footer = () => {
       <footer className="text-center text-gray-300 border-t-[1px] border-solid border-gray-600 py-10">
         <p>© {new Date().getFullYear()} <span className="text-gray-100 font-bold">JobFusion.</span> All Rights Reserved.</p>
       </footer>
+      <div className="flex justify-end"><ScrollButton></ScrollButton></div>
     </div>
   );
 };
