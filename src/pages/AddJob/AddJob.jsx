@@ -10,9 +10,11 @@ import addJobApi from "../../api/addJobApi";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { userContext } from "../../contexts/AuthContextProvider";
+import { useNavigate } from "react-router-dom";
 
 function AddJob() {
   useTitle("JobFusion | Add Job");
+  const navigate = useNavigate()
   const {user} = useContext(userContext)
   const [jobTitle, setJobTitle] = useState("");
   const [deadline, setDeadline] = useState(new Date());
@@ -119,6 +121,7 @@ function AddJob() {
       try {
         const result = await addJobMutation.mutateAsync(newJob);
         toast.success("Added a new job was successful!", {autoClose:1000})
+        navigate("/my-posted-jobs")
       } catch (error) {
         toast.error(error.message, {autoClose:1000})
       }

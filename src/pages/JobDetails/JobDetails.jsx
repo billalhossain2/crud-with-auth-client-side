@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import useTitle from '../../hooks/useTitle'
 import DatePicker from "react-datepicker";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import getJobById from '../../api/getJobById';
 import Spinner from '../../components/Spinner';
@@ -40,6 +40,7 @@ const JobDetails = () => {
   const [deadline, setDeadline] = useState(new Date());
   const [email, setEmail] = useState();
   const [priceError, setPriceError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(()=>{
     setEmail(user?.email)
@@ -82,6 +83,7 @@ const JobDetails = () => {
     try {
       const result = await addBidMutation.mutateAsync(newBid)
       toast.success("Added a new bid successfully", {autoClose:1000})
+      navigate("/my-bids")
     } catch (error) {
       toast.error(error.message, {autoClose:1000})
     }

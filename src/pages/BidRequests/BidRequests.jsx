@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query'
 import getBidsByBuyerEmail from '../../api/getBidsByBuyerEmail'
 import { useContext } from 'react'
 import { userContext } from '../../contexts/AuthContextProvider'
+import Spinner from '../../components/Spinner'
+import Error from '../../components/Error'
 
 const BidRequests = () => {
   useTitle("JobFusion | Bid Requests")
@@ -15,7 +17,16 @@ const BidRequests = () => {
     queryKey:["CatergoryJobs"],
     queryFn:()=>getBidsByBuyerEmail(user?.email)
   })
-  console.log(bidRequests)
+  
+
+  if(isLoading){
+    return <Spinner></Spinner>
+  }
+
+  if(isError){
+    return <Error></Error>
+  }
+  
   return (
     <div className="overflow-x-auto my-10">
     <h3 className='text-center font-bold text-3xl mb-10'>Bid Requests</h3>

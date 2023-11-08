@@ -14,6 +14,8 @@ import {
   signOut,
   signInWithPopup,
 } from "firebase/auth";
+import axios from "axios";
+import useAxiosInstance from "../hooks/useAxiosInstance";
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -21,6 +23,7 @@ const googleProvider = new GoogleAuthProvider();
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const axiosInstance = useAxiosInstance()
 
   //Authentication Functions
   const logInUsingGoogle = ()=>signInWithPopup(auth, googleProvider);
@@ -48,8 +51,20 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubScribe = onAuthStateChanged(auth, (currentUser) => {
+      const email = currentUser?.email;
       setUser(currentUser);
       setIsLoading(false);
+      if(currentUser){
+        axiosInstance.post("/set-cookie", {email, uid:currentUser?.uid})
+        .then(response => console.log("cookie set", response.data))
+        .catch(error => console.log('cooking setting error', error.message))
+      }else{
+        axiosInstance.post("/clear-cookie",{email})
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => console.log('cookie clearing error', error.message))
+      }
     });
     return () => unSubScribe();
   }, [user]);

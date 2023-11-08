@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 const Navbar = () => {
   const { user, logoutUser } = useContext(userContext);
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate()
   const handleShowMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -17,6 +18,7 @@ const Navbar = () => {
     logoutUser()
       .then(() => {
         toast.success("Logout success", { autoClose: 1000 });
+        navigate("/")
       })
       .catch((error) => {
         toast.error(error.message, { autoClose: 1000 });
@@ -63,7 +65,7 @@ const Navbar = () => {
         <NavLink to="/user">
           <img
             className="w-10 h-10 rounded-full border-solid border-2 border-[#2A41E8] p-1"
-            src={user.photoURL}
+            src={user?.photoURL}
             alt=""
           />
         </NavLink>
@@ -73,9 +75,14 @@ const Navbar = () => {
       </li>
     </>
   ) : (
-    <li>
+   <>
+    <li className="desktop">
       <NavLink to="/login">Login</NavLink>
     </li>
+    <li className="desktop">
+      <NavLink to="/register">Register</NavLink>
+    </li>
+   </>
   );
   return (
     <div className="relative">

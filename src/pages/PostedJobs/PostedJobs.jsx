@@ -17,7 +17,7 @@ const PostedJobs = () => {
   })
 
   if(isError){
-    return <Error>{error}</Error>
+    return <Error></Error>
   }
 
   if(isLoading){

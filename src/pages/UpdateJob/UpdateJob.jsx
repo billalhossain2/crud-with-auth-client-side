@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import useTitle from "../../hooks/useTitle";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import getJobById from "../../api/getJobById";
 import { queryClient } from "../../client/queryClient";
@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 
 function UpdateJob() {
   useTitle("JobFusion | Update Job")
+  const navigate = useNavigate()
   const {jobId} = useParams();
   const {isLoading, isError, error, data:updateJob} = useQuery({
     queryKey:["CatergoryJobs"],
@@ -48,7 +49,6 @@ function UpdateJob() {
     setJobType(JobType)
     setLocation(Location)
   }, [JobTitle, Description, JobTitle, Category, minimumPrice, maximumPrice, JobType, Location, email])
-  console.log("Update Email========> ", email)
 
   //Update mutation
 const updateMutation = useMutation({
@@ -135,6 +135,7 @@ const updateMutation = useMutation({
       try {
         const result = await updateMutation.mutateAsync({id:_id, newJob});
         toast.success("Update was successful", {autoClose:1000})
+        navigate("/my-posted-jobs")
       } catch (error) {
         toast.error(error.message, {autoClose:1000})
       }

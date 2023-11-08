@@ -7,6 +7,7 @@ const axiosInstance = axios.create({
 
 
 const useAxiosInstance = () => {
+  //Add a response interceptor
   return axiosInstance;
 }
 

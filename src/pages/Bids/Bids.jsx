@@ -9,6 +9,7 @@ import Spinner from "../../components/Spinner";
 import { useState } from "react";
 import { useEffect } from "react";
 import useAxiosInstance from "../../hooks/useAxiosInstance";
+import Error from "../../components/Error";
 
 const Bids = () => {
   useTitle("JobFusion | My Bids");
@@ -16,6 +17,8 @@ const Bids = () => {
   const axiosInstance = useAxiosInstance()
   const [bids, setBids] = useState([]);
   const [sortText, setSortText] = useState("ascending");
+  const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
   
   const sortChangeHandler = e=>{
     setSortText(e.target.value)
@@ -43,9 +46,23 @@ const Bids = () => {
     axiosInstance.get(`/bids?email=${user?.email}&sortTxt=${sortText}`)
     .then(response => {
       setBids(response.data)
+      setIsLoading(false)
+      setIsError(false)
     })
-    .catch(error => console.log(error.message))
+    .catch(error => {
+      console.log(error.message)
+      setIsLoading(false)
+      setIsError(error.message)
+    })
   }, [sortText])
+
+  if(isLoading){
+    return <Spinner></Spinner>
+  }
+
+  if(isError){
+    return <Error></Error>
+  }
 
   return (
     <div className="overflow-x-auto my-10">

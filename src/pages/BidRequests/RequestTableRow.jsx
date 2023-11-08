@@ -12,7 +12,6 @@ import { queryClient } from "../../client/queryClient";
 import changeStatusApi from "../../api/changeStatusApi";
 import { toast } from "react-toastify";
 const RequestTableRow = ({ request }) => {
-  console.log(request);
   const {
     _id,
     bidderEmail,
@@ -72,7 +71,7 @@ const RequestTableRow = ({ request }) => {
       <td>{deadline}</td>
       <td>{status}</td>
       <td>${price}</td>
-      {status === "pending" ? (
+      {status === "Pending" ? (
         <td>
           <button
             onClick={() => {

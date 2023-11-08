@@ -1,8 +1,15 @@
-# React + Vite
+# JobFusion - Your Online Marketplace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
+jobFusion is an online job marketplace that connects job seekers and employers. It is built using React, Tailwind CSS, Firebase, Tanstack React Query, and serveral other libraries. With jobFusion, users can easily register, post job listings, udate job details, delete job listings, view job details, and submit bids for job opportunities.
 
-Currently, two official plugins are available:
+### Live Link: https://job-fusion-9e8ed.web.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+* __User Authentication__: Users can register and log in to the platform securely.
+* __Job Posting__: Employers can post job listing with details.
+* __Job Management__: Employers can update and delete job listing as needed.
+* __Job Details__: Users can view comprehensive information about each job listing.
+* __Bidding System__: Job seekers can submit bids for job opportunities.
+* __Bid Request Handling__: Employers can review and manage bid requests from job seekers.
+* __Responsiveness__: Website can be rendered perfectly on all devices
