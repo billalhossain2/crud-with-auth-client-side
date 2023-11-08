@@ -24,23 +24,6 @@ const Bids = () => {
     setSortText(e.target.value)
   }
 
-  // const {
-  //   isLoading,
-  //   isError,
-  //   error,
-  //   data: bids,
-  // } = useQuery({
-  //   queryKey: ["CatergoryJobs"],
-  //   queryFn: () => getBidsByEmail(user?.email),
-  //   cacheTime: 1000 * 60 * 60 * 24,
-  //   retry: 3,
-  // });
-
-  // if (isLoading) {
-  //   return <Spinner></Spinner>;
-  // } else {
-  // }
-
 
   useEffect(()=>{
     axiosInstance.get(`/bids?email=${user?.email}&sortTxt=${sortText}`)
@@ -68,7 +51,7 @@ const Bids = () => {
     <div className="overflow-x-auto my-10">
       <h3 className="text-center font-bold text-3xl mb-10">My Bids</h3>
       <div className="flex justify-end items-center border-solid border-gray-300 border-[1px] mb-5">
-        <p className="text-blue-500 font-bold">Sort By:</p>
+        <p className="text-blue-500 font-bold me-2">Sort By:</p>
         <select onChange={sortChangeHandler} className="select border-none outline-none">
           <option selected value="ascending">Ascending</option>
           <option value="descending">Descending</option>

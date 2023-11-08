@@ -21,7 +21,7 @@ function UpdateJob() {
   let {_id, Category, Deadline, jobType:JobType, jobTitle:JobTitle, maximumPrice, minimumPrice, location:Location, email, Description} = updateJob ? updateJob[0] : {};
 
   const [jobTitle, setJobTitle] = useState("");
-  const [deadline, setDeadline] = useState(new Date());
+  const [deadline, setDeadline] = useState(Deadline);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState("");
@@ -39,6 +39,10 @@ function UpdateJob() {
   const [jobTypeError, setJobTypeError] = useState("");
   const [categoryError, setCategoryError] = useState("");
   // Add similar state and error variables for other fields
+
+  var curr = new Date();
+curr.setDate(curr.getDate() + 3);
+var date = curr.toISOString().substring(0,10);
 
   useEffect(()=>{
     setJobTitle(JobTitle)
@@ -184,9 +188,12 @@ const updateMutation = useMutation({
             Deadline
           </label>
           <DatePicker
+            type="date"
+            selected={new Date(Deadline || null)}
+            onSelect={(date)=>setDeadline(date)}
+            onChange={(date)=>setDeadline(date)}
+            dateFormat="P"
             className={`w-full p-2 border ${deadlineError ? 'border-red-500' : 'border-gray-300'}`}
-            selected={deadline}
-            onChange={(date) => setDeadline(date)}
           />
           {deadlineError && (
             <p className="text-red-500 text-sm">{deadlineError}</p>

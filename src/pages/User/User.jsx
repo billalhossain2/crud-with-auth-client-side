@@ -8,8 +8,8 @@ const User = () => {
   const {user} = useContext(userContext)
   return (
     <div className="min-h-screen flex items-center justify-center">
-    <div className="bg-white p-8 rounded-lg shadow-md max-w-md">
-      <div className="text-center">
+    <div className="p-8 border-solid border-[1px] border-gray-400 rounded-lg shadow-md max-w-md">
+      <div className="text-center space-y-3">
         <img
           src={user?.photoURL}
           alt="Profile Image"
@@ -23,7 +23,7 @@ const User = () => {
       <div className="mt-6">
         <h2 className="text-lg font-semibold">About Me</h2>
         <p className="text-gray-600">
-        I'm a passionate software engineer with a love for coding and problem-solving. With over 5 years of experience in web development, I specialize in front-end technologies and building user-friendly interfaces. My goal is to create elegant, efficient, and responsive web applications that enhance the user experience. When I'm not coding, you can find me exploring the latest tech trends or hiking in the great outdoors.
+        I'm a passionate web developer with a love for coding and problem-solving. With over 5 years of experience in web development, I specialize in front-end technologies and building user-friendly interfaces. My goal is to create elegant, efficient, and responsive web applications that enhance the user experience. When I'm not coding, you can find me exploring the latest tech trends or hiking in the great outdoors.
         </p>
       </div>
 

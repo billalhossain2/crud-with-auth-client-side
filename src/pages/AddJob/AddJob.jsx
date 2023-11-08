@@ -17,7 +17,7 @@ function AddJob() {
   const navigate = useNavigate()
   const {user} = useContext(userContext)
   const [jobTitle, setJobTitle] = useState("");
-  const [deadline, setDeadline] = useState(new Date());
+  const [deadline, setDeadline] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState("");
@@ -71,8 +71,8 @@ function AddJob() {
       isValid = false;
     }
 
-    if (deadline.getTime() < new Date().getTime()) {
-      setDeadlineError("Valid date is required");
+    if (new Date(deadline).getTime() < new Date().getTime()) {
+      setDeadlineError("Valid deadline is required");
       isValid = false;
     }
 
@@ -167,12 +167,12 @@ function AddJob() {
           <label htmlFor="deadline" className="block text-gray-600">
             Deadline
           </label>
-          <DatePicker
+          <input
+            type="date"
+            onChange={(e)=>setDeadline(e.target.value)}
             className={`w-full p-2 border ${
               deadlineError ? "border-red-500" : "border-gray-300"
             }`}
-            selected={deadline}
-            onChange={(date) => setDeadline(date)}
           />
           {deadlineError && (
             <p className="text-red-500 text-sm">{deadlineError}</p>
