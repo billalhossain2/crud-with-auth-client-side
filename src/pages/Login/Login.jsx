@@ -5,6 +5,10 @@ import { useContext } from 'react';
 import { userContext } from '../../contexts/AuthContextProvider';
 import { toast } from 'react-toastify';
 
+//icons
+import {AiOutlineMail} from "react-icons/ai"
+import {LiaKeySolid} from "react-icons/lia"
+
 function Login() {
   useTitle("JobFusion | Login")
   const navigate = useNavigate()
@@ -81,15 +85,16 @@ function Login() {
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-semibold mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label htmlFor="email" className="block text-gray-600">Email</label>
             <input
               type="email"
               id="email"
-              className={`w-full p-2 border ${emailError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full outline-none p-2 border pl-10 ${emailError ? 'border-red-500' : 'border-gray-300'}`}
               value={email}
               onChange={handleEmailChange}
             />
+            <AiOutlineMail className='absolute bottom-2 left-2 text-2xl text-gray-400'></AiOutlineMail>
             {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
           </div>
           <div className="mb-4">
@@ -98,10 +103,11 @@ function Login() {
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                className={`w-full p-2 pl-3 border ${passwordError ? 'border-red-500' : 'border-gray-300'}`}
+                className={`w-full outline-none p-2 pl-10 border ${passwordError ? 'border-red-500' : 'border-gray-300'}`}
                 value={password}
                 onChange={handlePasswordChange}
               />
+              <LiaKeySolid className='absolute bottom-2 left-2 text-2xl text-gray-400'></LiaKeySolid>
               <span
                 className="absolute right-3 top-2 text-gray-400 cursor-pointer"
                 onClick={handleTogglePasswordVisibility}

@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import useTitle from '../../hooks/useTitle';
-import { userContext } from '../../contexts/AuthContextProvider';
-import { useContext } from 'react';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useTitle from "../../hooks/useTitle";
+import { userContext } from "../../contexts/AuthContextProvider";
+import { useContext } from "react";
+import { toast } from "react-toastify";
+//icons
+import { AiOutlineMail, AiOutlineUserAdd } from "react-icons/ai";
+import { LiaKeySolid } from "react-icons/lia";
+import { HiOutlinePhotograph } from "react-icons/hi";
 
 function Register() {
-  useTitle("JobFusion | Register")
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [nameError, setNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [photoUrlError, setPhotoUrlError] = useState('');
+  useTitle("JobFusion | Register");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [photoUrlError, setPhotoUrlError] = useState("");
 
-  // User Context 
-    const {user, signupUserWithEamilAndPWD, updateUserProfile, logoutUser} = useContext(userContext)
-    const navigate = useNavigate();
+  // User Context
+  const { user, signupUserWithEamilAndPWD, updateUserProfile, logoutUser } =
+    useContext(userContext);
+  const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -40,70 +45,78 @@ function Register() {
     e.preventDefault();
 
     // Field validation
-    setNameError('');
-    setEmailError('');
-    setPasswordError('');
-    setPhotoUrlError('');
+    setNameError("");
+    setEmailError("");
+    setPasswordError("");
+    setPhotoUrlError("");
 
     let isValid = true;
 
     if (!name) {
-      setNameError('Name is required');
+      setNameError("Name is required");
       isValid = false;
     }
 
     if (!email) {
-      setEmailError('Email is required');
+      setEmailError("Email is required");
       isValid = false;
     }
 
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError("Password is required");
       isValid = false;
     } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters long');
+      setPasswordError("Password must be at least 6 characters long");
       isValid = false;
-    }else if (!(/[a-z]/).test(password)) {
-      setPasswordError('Password should contain at least one lower case letter');
+    } else if (!/[a-z]/.test(password)) {
+      setPasswordError(
+        "Password should contain at least one lower case letter"
+      );
       isValid = false;
-    }else if (!(/[A-Z]/).test(password)) {
-      setPasswordError('Password should contain at least one upper case letter');
+    } else if (!/[A-Z]/.test(password)) {
+      setPasswordError(
+        "Password should contain at least one upper case letter"
+      );
       isValid = false;
-    }else if (!(/[0-9]/).test(password)) {
-      setPasswordError('Password should contain at least one numeric value');
+    } else if (!/[0-9]/.test(password)) {
+      setPasswordError("Password should contain at least one numeric value");
       isValid = false;
-    }else if (!(/[*@#$-.]/).test(password)) {
-      setPasswordError('Password should contain at least one special character (* @ # $ -.)');
+    } else if (!/[*@#$-.]/.test(password)) {
+      setPasswordError(
+        "Password should contain at least one special character (* @ # $ -.)"
+      );
       isValid = false;
     }
 
     if (!photoUrl) {
-      setPhotoUrlError('Photo URL is required');
+      setPhotoUrlError("Photo URL is required");
       isValid = false;
     } else if (!isValidPhotoUrl(photoUrl)) {
-      setPhotoUrlError('Invalid Photo URL');
+      setPhotoUrlError("Invalid Photo URL");
       isValid = false;
     }
 
     if (isValid) {
       // You can now submit the registration data
-      console.log('Registration data:', { name, email, password, photoUrl });
+      console.log("Registration data:", { name, email, password, photoUrl });
       signupUserWithEamilAndPWD(email, password)
-      .then(user=>{
-        //Update user after registration success
-        updateUserProfile({displayName:name, photoURL:photoUrl})
-        .then(()=>{
-          //Logout user
-          logoutUser()
-          .then(()=>toast.success("Registration success!", {autoClose:1000}))
-          .catch(()=>toast.error(error.message, {autoClose:1000}))
-          navigate("/login")
+        .then((user) => {
+          //Update user after registration success
+          updateUserProfile({ displayName: name, photoURL: photoUrl })
+            .then(() => {
+              //Logout user
+              logoutUser()
+                .then(() =>
+                  toast.success("Registration success!", { autoClose: 1000 })
+                )
+                .catch(() => toast.error(error.message, { autoClose: 1000 }));
+              navigate("/login");
+            })
+            .catch((error) => toast.error(message.error, { autoClose: 1000 }));
         })
-        .catch(error=>toast.error(message.error, {autoClose:1000}))
-      })
-      .catch(error=>{
-        toast.error(error.message, {autoClose:1000})
-      })
+        .catch((error) => {
+          toast.error(error.message, { autoClose: 1000 });
+        });
     }
   };
 
@@ -118,54 +131,89 @@ function Register() {
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-semibold mb-4">Registration</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-600">Name</label>
+          <div className="mb-4 relative">
+            <label htmlFor="name" className="block text-gray-600">
+              Name
+            </label>
             <input
               type="text"
               id="name"
-              className={`w-full p-2 border ${nameError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full py-2 pl-10 border ${
+                nameError ? "border-red-500" : "border-gray-300"
+              }`}
               value={name}
               onChange={handleNameChange}
             />
+             <AiOutlineUserAdd className='absolute bottom-2 left-2 text-2xl text-gray-400'></AiOutlineUserAdd>
             {nameError && <p className="text-red-500 text-sm">{nameError}</p>}
           </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600">Email</label>
+          <div className="mb-4 relative">
+            <label htmlFor="email" className="block text-gray-600">
+              Email
+            </label>
             <input
               type="email"
               id="email"
-              className={`w-full p-2 border ${emailError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full py-2 pl-10 border ${
+                emailError ? "border-red-500" : "border-gray-300"
+              }`}
               value={email}
               onChange={handleEmailChange}
             />
+            <AiOutlineMail className='absolute bottom-2 left-2 text-2xl text-gray-400'></AiOutlineMail>
             {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
           </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600">Password</label>
+          <div className="mb-4 relative">
+            <label htmlFor="password" className="block text-gray-600">
+              Password
+            </label>
             <input
               type="password"
               id="password"
-              className={`w-full p-2 border ${passwordError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full py-2 pl-10 border ${
+                passwordError ? "border-red-500" : "border-gray-300"
+              }`}
               value={password}
               onChange={handlePasswordChange}
             />
-            {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+            <LiaKeySolid className='absolute bottom-2 left-2 text-2xl text-gray-400'></LiaKeySolid>
+            {passwordError && (
+              <p className="text-red-500 text-sm">{passwordError}</p>
+            )}
           </div>
-          <div className="mb-4">
-            <label htmlFor="photoUrl" className="block text-gray-600">Photo URL</label>
+          <div className="mb-4 relative">
+            <label htmlFor="photoUrl" className="block text-gray-600">
+              Photo URL
+            </label>
             <input
               type="text"
               id="photoUrl"
-              className={`w-full p-2 border ${photoUrlError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full py-2 pl-10 border ${
+                photoUrlError ? "border-red-500" : "border-gray-300"
+              }`}
               value={photoUrl}
               onChange={handlePhotoUrlChange}
             />
-            {photoUrlError && <p className="text-red-500 text-sm">{photoUrlError}</p>}
+            <HiOutlinePhotograph className='absolute bottom-2 left-2 text-2xl text-gray-400'></HiOutlinePhotograph>
+            {photoUrlError && (
+              <p className="text-red-500 text-sm">{photoUrlError}</p>
+            )}
           </div>
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          >
             Register
           </button>
-          <p className='text-center mt-2'>Already have an account? <Link className='text-[#3b4edb] font-semibold hover:font-bold hover:underline' to="/login">Login</Link> </p>
+          <p className="text-center mt-2">
+            Already have an account?{" "}
+            <Link
+              className="text-[#3b4edb] font-semibold hover:font-bold hover:underline"
+              to="/login"
+            >
+              Login
+            </Link>{" "}
+          </p>
         </form>
       </div>
     </div>

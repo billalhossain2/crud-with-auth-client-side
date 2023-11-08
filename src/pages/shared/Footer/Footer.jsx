@@ -48,6 +48,9 @@ const Footer = () => {
         </nav>
         <nav className="text-gray-300 text-[17px]">
           <header className="text-gray-200 text-2xl mb-1">Helpful Links</header>
+          <p><span className="font-bold">Email</span>: <span className="hover:underline">billal.webdev@gmail.com</span></p>
+          <p><span className="font-bold">Phone</span>: <span className="hover:underline">+8801780128076</span></p>
+          <p><span className="font-bold">Address</span>: <span className="hover:underline">Tomchom Bridge, Comilla</span></p>
           <a className="link link-hover">Terms of use</a>
           <a className="link link-hover">Privacy policy</a>
           <a className="link link-hover">Cookie policy</a>

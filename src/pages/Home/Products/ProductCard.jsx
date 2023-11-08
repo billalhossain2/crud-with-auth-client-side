@@ -24,7 +24,7 @@ const ProductCard = ({ jobItem }) => {
       whileHover="hover"
       variants={variants}
     >
-      <div className="border-solid border-[1px] border-gray-300 p-3 rounded-lg space-y-3">
+      <div className="border-solid border-[1px] border-blue-200 hover:border-blue-500 p-3 rounded-lg space-y-3">
         <h3 className="font-bold text-xl text-gray-700">
           {jobTitle}
         </h3>
