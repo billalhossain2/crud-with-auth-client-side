@@ -9,25 +9,53 @@ import getJobById from "../../api/getJobById";
 import { queryClient } from "../../client/queryClient";
 import updateJobApi from "../../api/updateJobApi";
 import { toast } from "react-toastify";
+import moment from "moment/moment";
+import useAxiosInstance from "../../hooks/useAxiosInstance";
 
 function UpdateJob() {
-  useTitle("JobFusion | Update Job")
-  const navigate = useNavigate()
-  const {jobId} = useParams();
-  const {isLoading, isError, error, data:updateJob} = useQuery({
-    queryKey:["CatergoryJobs"],
-    queryFn:()=>getJobById(jobId)
-  })
-  let {_id, Category, Deadline, jobType:JobType, jobTitle:JobTitle, maximumPrice, minimumPrice, location:Location, email, Description} = updateJob ? updateJob[0] : {};
+  useTitle("JobFusion | Update Job");
+  const navigate = useNavigate();
+  const { jobId } = useParams();
+  const axiosInstance = useAxiosInstance()
+  const [updateJob, setUpdateJob] = useState(null)
+
 
   const [jobTitle, setJobTitle] = useState("");
-  const [deadline, setDeadline] = useState(Deadline);
+  const [deadline, setDeadline] = useState("");
+
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [jobType, setJobType] = useState("");
   const [location, setLocation] = useState("");
+
+
+//load job data
+  useEffect(()=>{
+    axiosInstance.get(`category-jobs/${jobId}`)
+    .then(response => {
+      setUpdateJob(response.data)
+      setDeadline(response.data[0].Deadline)
+    })
+    .catch(error => console.log("Update job error", error.message))
+  }, [jobId])
+
+
+    let {
+    _id,
+    Category,
+    Deadline,
+    jobType: JobType,
+    jobTitle: JobTitle,
+    maximumPrice,
+    minimumPrice,
+    location: Location,
+    email,
+    Description,
+  } = updateJob ? updateJob[0] : {};
+
+
 
   const [jobTitleError, setJobTitleError] = useState("");
   const [deadlineError, setDeadlineError] = useState("");
@@ -40,30 +68,37 @@ function UpdateJob() {
   const [categoryError, setCategoryError] = useState("");
   // Add similar state and error variables for other fields
 
-  var curr = new Date();
-curr.setDate(curr.getDate() + 3);
-var date = curr.toISOString().substring(0,10);
 
-  useEffect(()=>{
-    setJobTitle(JobTitle)
-    setDescription(Description)
-    setCategory(Category)
-    setMinPrice(minimumPrice)
-    setMaxPrice(maximumPrice)
-    setJobType(JobType)
-    setLocation(Location)
-  }, [JobTitle, Description, JobTitle, Category, minimumPrice, maximumPrice, JobType, Location, email])
+  useEffect(() => {
+    setJobTitle(JobTitle);
+    setDescription(Description);
+    setCategory(Category);
+    setMinPrice(minimumPrice);
+    setMaxPrice(maximumPrice);
+    setJobType(JobType);
+    setLocation(Location);
+  }, [
+    JobTitle,
+    Description,
+    JobTitle,
+    Category,
+    minimumPrice,
+    maximumPrice,
+    JobType,
+    Location,
+    email,
+  ]);
 
   //Update mutation
-const updateMutation = useMutation({
-  mutationFn:updateJobApi,
-  onSuccess:()=>{
-    //invalidate and refetch
-    queryClient.invalidateQueries({queryKey:["CatergoryJobs"]})
-  }
-})
+  const updateMutation = useMutation({
+    mutationFn: updateJobApi,
+    onSuccess: () => {
+      //invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["CatergoryJobs"] });
+    },
+  });
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
 
@@ -89,7 +124,7 @@ const updateMutation = useMutation({
       isValid = false;
     }
 
-    if (deadline.getTime() < new Date().getTime()) {
+    if (new Date(deadline).getTime() < new Date().getTime()) {
       setDeadlineError("Valid date is required");
       isValid = false;
     }
@@ -112,36 +147,36 @@ const updateMutation = useMutation({
       isValid = false;
     }
 
-    if(!jobType){
-      setJobTypeError('Job Type is required')
+    if (!jobType) {
+      setJobTypeError("Job Type is required");
       isValid = false;
     }
 
-    if(!category){
-      setCategoryError('Category is required');
+    if (!category) {
+      setCategoryError("Category is required");
       isValid = false;
     }
 
     if (isValid) {
-      console.log("update job")
+      console.log("update job");
       // Submit the job data to your API or database
       const newJob = {
         jobTitle,
-        Deadline:deadline,
-        Description:description,
-        Category:category,
-        minimumPrice:minPrice,
-        maximumPrice:maxPrice,
+        Deadline: moment(deadline).format("YYYY/MM/DD"),
+        Description: description,
+        Category: category,
+        minimumPrice: minPrice,
+        maximumPrice: maxPrice,
         jobType,
         location,
-        email
+        email,
       };
       try {
-        const result = await updateMutation.mutateAsync({id:_id, newJob});
-        toast.success("Update was successful", {autoClose:1000})
-        navigate("/my-posted-jobs")
+        const result = await updateMutation.mutateAsync({ id: _id, newJob });
+        toast.success("Update was successful", { autoClose: 1000 });
+        navigate("/my-posted-jobs");
       } catch (error) {
-        toast.error(error.message, {autoClose:1000})
+        toast.error(error.message, { autoClose: 1000 });
       }
     }
 
@@ -188,12 +223,12 @@ const updateMutation = useMutation({
             Deadline
           </label>
           <DatePicker
-            type="date"
-            selected={new Date(Deadline || null)}
-            onSelect={(date)=>setDeadline(date)}
-            onChange={(date)=>setDeadline(date)}
+            selected={new Date(deadline || null)}
+            onChange={(date) => setDeadline(date)}
             dateFormat="P"
-            className={`w-full p-2 border ${deadlineError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full p-2 border ${
+              deadlineError ? "border-red-500" : "border-gray-300"
+            }`}
           />
           {deadlineError && (
             <p className="text-red-500 text-sm">{deadlineError}</p>
@@ -223,7 +258,9 @@ const updateMutation = useMutation({
           <select
             id="category"
             name="category"
-            className={`w-full p-2 border ${categoryError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full p-2 border ${
+              categoryError ? "border-red-500" : "border-gray-300"
+            }`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -235,7 +272,9 @@ const updateMutation = useMutation({
             <option value="Education & Training">Education & Training</option>
             <option value="Education & Training">Education & Training</option>
           </select>
-          {categoryError && <p className="text-red-500 text-sm">{categoryError}</p>}
+          {categoryError && (
+            <p className="text-red-500 text-sm">{categoryError}</p>
+          )}
         </div>
         <div className="mb-4">
           <label htmlFor="minPrice" className="block text-gray-600">
@@ -280,7 +319,9 @@ const updateMutation = useMutation({
           <select
             id="job-type"
             name="jobType"
-            className={`w-full p-2 border ${jobTypeError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full p-2 border ${
+              jobTypeError ? "border-red-500" : "border-gray-300"
+            }`}
             value={jobType}
             onChange={(e) => setJobType(e.target.value)}
           >
@@ -292,7 +333,9 @@ const updateMutation = useMutation({
             <option value="On-Site">On-Site</option>
             <option value="Contract">Contract</option>
           </select>
-          {jobTypeError && <p className="text-red-500 text-sm">{jobTypeError}</p>}
+          {jobTypeError && (
+            <p className="text-red-500 text-sm">{jobTypeError}</p>
+          )}
         </div>
         <div className="mb-4">
           <label htmlFor="location" className="block text-gray-600">
