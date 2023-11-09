@@ -214,7 +214,7 @@ function AddJob() {
             <option value="Graphic Design">Graphic Design</option>
             <option value="Sales & Marketing">Sales & Marketing</option>
             <option value="Writing & Translation">Writing & Translation</option>
-            <option value="Education & Training">Education & Training</option>
+            <option value="Education & Training">Digital Marketing</option>
             <option value="Education & Training">Education & Training</option>
           </select>
           {categoryError && (
