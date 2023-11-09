@@ -7,6 +7,7 @@ import {
 import {HiOutlineLocationMarker} from "react-icons/hi"
 import {RiDeleteBin6Line} from "react-icons/ri"//Delete icon
 import { GrLocation, GrUpdate } from "react-icons/gr";//Update icon
+import { FiEdit } from "react-icons/fi";//Update icon
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../client/queryClient";
 import deleteJobApi from "../../api/deleteJobApi";
@@ -61,7 +62,7 @@ const PostedJobCard = ({jobItem}) => {
       whileHover="hover"
       variants={variants}
     >
-      <div className="border-solid border-[1px] border-gray-300 p-3 rounded-lg space-y-3 h-[350px] flex flex-col justify-between">
+      <div className="border-solid border-[1px] border-blue-200 p-3 hover:border-blue-500 rounded-lg space-y-3 h-[350px] flex flex-col justify-between">
         <h3 className="font-bold text-xl text-gray-700">
           {jobTitle}
         </h3>
@@ -89,12 +90,12 @@ const PostedJobCard = ({jobItem}) => {
 
         <div className="flex gap-3 mt-5">
           <Link to={`/update-job/${_id}`}>
-          <button className="bg-[#3b4edb] hover:bg-[#202758] duration-500 px-5 py-2 font-bold rounded-lg">
-            <GrUpdate className="text-white text-2xl"></GrUpdate>
+          <button className="border-solid border-[1px] border-blue-500 text-blue-700 hover:bg-blue-700 hover:text-white duration-300 px-5 py-2 font-bold rounded-lg">
+            <FiEdit className="font-bold text-2xl"></FiEdit>
           </button>
           </Link>
-          <button onClick={()=>handleDelete(_id)} className="duration-500 px-5 py-2 text-white font-bold rounded-lg">
-            <RiDeleteBin6Line className="text-red-600 text-2xl"></RiDeleteBin6Line>
+          <button onClick={()=>handleDelete(_id)} className="border-solid border-[1px] border-red-500 text-red-700 hover:bg-red-700 hover:text-white duration-300 px-5 py-2 font-bold rounded-lg">
+            <RiDeleteBin6Line className="text-2xl"></RiDeleteBin6Line>
           </button>
         </div>
       </div>
