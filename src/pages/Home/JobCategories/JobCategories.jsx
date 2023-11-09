@@ -30,7 +30,7 @@ const JobCategories = () => {
           <Tab>Writting & Translation</Tab>
           <Tab>Education & Training</Tab>
         </TabList>
-        {error && <Error error={error}></Error>}
+        {error && <Error>{error}</Error>}
         {loading && <Spinner></Spinner>}
 
         {categoryJobs?.map((category, index) => (

@@ -53,6 +53,9 @@ const Footer = () => {
         </nav>
         <nav className="text-gray-300 text-[17px]">
           <header className="text-gray-200 text-2xl mb-1">Helpful Links</header>
+          <p><span className="font-bold mr-1">Email:</span><span>Your Email Here</span></p>
+          <p><span className="font-bold mr-1">Phone:</span><span>Your Phone Number Here</span></p>
+          <p><span className="font-bold mr-1">Address:</span><span>Tomchom Bride, Comilla</span></p>
           <a className="link link-hover">Terms of use</a>
           <a className="link link-hover">Privacy policy</a>
           <a className="link link-hover">Cookie policy</a>

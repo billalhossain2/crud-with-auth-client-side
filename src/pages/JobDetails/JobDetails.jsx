@@ -69,7 +69,7 @@ const JobDetails = () => {
   }
 
   if (error) {
-    return <Error error = {error}></Error>;
+    return <Error>{error}</Error>;
   }
 
   if (loading) {

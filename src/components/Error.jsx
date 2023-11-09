@@ -1,10 +1,9 @@
 import React from 'react'
 
-const Error = ({error}) => {
-  console.log('I am from error======> ', error)
+const Error = ({children}) => {
   return (
     <div>
-        <p className='text-red-500 font-bold text-2xl text-center my-10'>Something went wrong!</p>
+        <p className='text-red-500 font-bold text-2xl text-center my-10'>{children}</p>
     </div>
   )
 }

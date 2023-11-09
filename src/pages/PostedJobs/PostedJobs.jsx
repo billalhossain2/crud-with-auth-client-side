@@ -14,7 +14,7 @@ const PostedJobs = () => {
   const [loading, error, jobs] = useFetch(`/getJobsByEmail/${user?.email}`)
 
   if(error){
-    return <Error></Error>
+    return <Error>{error}</Error>
   }
 
   if(loading){

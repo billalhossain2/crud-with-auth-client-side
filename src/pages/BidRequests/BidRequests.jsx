@@ -18,7 +18,7 @@ const BidRequests = () => {
   }
 
   if(error){
-    return <Error></Error>
+    return <Error>{error}</Error>
   }
   
   return (
