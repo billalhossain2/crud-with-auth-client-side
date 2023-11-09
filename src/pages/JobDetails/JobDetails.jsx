@@ -14,6 +14,7 @@ import useAxiosInstance from "../../hooks/useAxiosInstance";
 import addBidApi from "../../api/addBidApi";
 import { queryClient } from "../../client/queryClient";
 import {FcExpired} from "react-icons/fc"
+import useFetch from "../../hooks/useFetch";
 
 const JobDetails = () => {
 
@@ -28,47 +29,8 @@ const JobDetails = () => {
   const [deadline, setDeadline] = useState(new Date());
   const [email, setEmail] = useState("");
 
-
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-
-
-  //Add bid mutation
-  const addBidMutation = useMutation({
-    mutationFn: addBidApi,
-    onSuccess: () => {
-      //invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["CatergoryJobs"] });
-    },
-  });
-
-  //get job using tanstack query
-  // const {isLoading, isError, error, data} = useQuery({
-  //   queryKey:["CatergoryJobs"],
-  //   queryFn:()=>getJobById(jobId)
-  // })
-
-
-  useEffect(() => {
-    axiosInstance
-      .get(`/category-jobs/${jobId}`)
-      .then((response) => {
-        setData(response.data[0]);
-        setPrice(response.data[0].minimumPrice)
-        setLoading(false);
-        setError(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }, [jobId]);
-
-
-
-
+  const [loading, error, data] = useFetch(`/category-jobs/${jobId}`)
+  
   const {
     _id,
     jobTitle,
@@ -80,11 +42,21 @@ const JobDetails = () => {
     location,
     maximumPrice,
     minimumPrice,
-  } = data;
+  } = data[0] || {};
+
+  useEffect(()=>{
+    setPrice(minimumPrice)
+  }, [minimumPrice])
 
 
-
-
+  //Add bid mutation
+  const addBidMutation = useMutation({
+    mutationFn: addBidApi,
+    onSuccess: () => {
+      //invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["CatergoryJobs"] });
+    },
+  });
 
   //Check user role
   const isOwner = user?.email === buyerMail;
@@ -111,9 +83,6 @@ const JobDetails = () => {
       return toast.error("All fields are requred!", { autoClose: 1000 });
     }
 
-    // Add your form submission logic here
-    // You can access the input values in `price`, `deadline`, `email`, and `buyerMail`
-    console.log(price, deadline, email, buyerMail);
     const newBid = {
       title: jobTitle,
       price: price,
