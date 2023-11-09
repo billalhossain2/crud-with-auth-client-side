@@ -13,3 +13,12 @@ jobFusion is an online job marketplace that connects job seekers and employers. 
 * __Bidding System__: Job seekers can submit bids for job opportunities.
 * __Bid Request Handling__: Employers can review and manage bid requests from job seekers.
 * __Responsiveness__: Website can be rendered perfectly on all devices
+
+## Technologies Used:
+
+* Tanstack Query (Mutaions)
+* React
+* Firebase Auth
+* Tailwind CSS
+* Framer Motion
+
