@@ -1,28 +1,26 @@
 import React from 'react'
 import useTitle from '../../hooks/useTitle'
 import PostedJobCard from './PostedJobCard'
-import { useQuery } from '@tanstack/react-query'
-import getJobsByEmail from '../../api/getJobsByEmail'
 import { useContext } from 'react'
 import { userContext } from '../../contexts/AuthContextProvider'
 import Spinner from '../../components/Spinner'
 import Error from '../../components/Error'
+import useFetch from '../../hooks/useFetch'
 
 const PostedJobs = () => {
   useTitle("JobFusion | Posted Jobs")
   const {user} = useContext(userContext)
-  const {isLoading, isError, error, data:jobs} = useQuery({
-    queryKey:["CatergoryJobs"],
-    queryFn:()=>getJobsByEmail(user?.email)
-  })
 
-  if(isError){
+  const [loading, error, jobs] = useFetch(`/getJobsByEmail/${user?.email}`)
+
+  if(error){
     return <Error></Error>
   }
 
-  if(isLoading){
+  if(loading){
     return <Spinner></Spinner>
   }
+
   return (
     <div className='mb-32'>
       <h3 className='text-3xl font-bold text-center text-gray-700 my-10'>My Posted Jobs</h3>

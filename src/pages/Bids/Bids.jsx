@@ -1,49 +1,31 @@
 import React from "react";
 import useTitle from "../../hooks/useTitle";
 import TableRow from "./TableRow";
-import { useQuery } from "@tanstack/react-query";
-import getBidsByEmail from "../../api/getBidsByEmail";
 import { useContext } from "react";
 import { userContext } from "../../contexts/AuthContextProvider";
 import Spinner from "../../components/Spinner";
-import { useState } from "react";
-import { useEffect } from "react";
-import useAxiosInstance from "../../hooks/useAxiosInstance";
 import Error from "../../components/Error";
+import useFetch from "../../hooks/useFetch";
+import { useState } from "react";
 
 const Bids = () => {
+
   useTitle("JobFusion | My Bids");
+
   const { user } = useContext(userContext);
-  const axiosInstance = useAxiosInstance()
-  const [bids, setBids] = useState([]);
-  const [sortText, setSortText] = useState("ascending");
-  const [isLoading, setIsLoading] = useState(true)
-  const [isError, setIsError] = useState(false)
-  
+  const [sortText, setSortText] = useState("");
+
   const sortChangeHandler = e=>{
     setSortText(e.target.value)
   }
 
+  const [loading, error, bids] = useFetch(`/bids?email=${user?.email}&sortTxt=${sortText}`)
 
-  useEffect(()=>{
-    axiosInstance.get(`/bids?email=${user?.email}&sortTxt=${sortText}`)
-    .then(response => {
-      setBids(response.data)
-      setIsLoading(false)
-      setIsError(false)
-    })
-    .catch(error => {
-      console.log(error.message)
-      setIsLoading(false)
-      setIsError(error.message)
-    })
-  }, [sortText])
-
-  if(isLoading){
+  if(loading){
     return <Spinner></Spinner>
   }
 
-  if(isError){
+  if(error){
     return <Error></Error>
   }
 

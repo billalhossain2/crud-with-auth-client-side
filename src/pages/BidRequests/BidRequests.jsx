@@ -1,29 +1,23 @@
 import React from 'react'
 import useTitle from '../../hooks/useTitle'
 import RequestTableRow from './RequestTableRow'
-import { useQuery } from '@tanstack/react-query'
-import getBidsByBuyerEmail from '../../api/getBidsByBuyerEmail'
 import { useContext } from 'react'
 import { userContext } from '../../contexts/AuthContextProvider'
 import Spinner from '../../components/Spinner'
 import Error from '../../components/Error'
+import useFetch from '../../hooks/useFetch'
 
 const BidRequests = () => {
   useTitle("JobFusion | Bid Requests")
   const {user} = useContext(userContext)
 
-  //Get all bid requests by job owner email
-  const {isLoading, isError, error, data:bidRequests} = useQuery({
-    queryKey:["CatergoryJobs"],
-    queryFn:()=>getBidsByBuyerEmail(user?.email)
-  })
-  
+  const [loading, error, bidRequests] = useFetch(`/bidRequests/${user?.email}`)
 
-  if(isLoading){
+  if(loading){
     return <Spinner></Spinner>
   }
 
-  if(isError){
+  if(error){
     return <Error></Error>
   }
   
