@@ -9,7 +9,7 @@ import { queryClient } from "./client/queryClient";
 import ThemeContextProvider from "./contexts/ThemeContextProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <ThemeContextProvider>
     <AuthContextProvider>
       <QueryClientProvider client={queryClient}>
@@ -17,5 +17,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       </QueryClientProvider>
     </AuthContextProvider>
     </ThemeContextProvider>
-  </React.StrictMode>
+  /* </React.StrictMode> */
 );
