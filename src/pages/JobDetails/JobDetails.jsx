@@ -56,6 +56,7 @@ const JobDetails = () => {
       .get(`/category-jobs/${jobId}`)
       .then((response) => {
         setData(response.data[0]);
+        setPrice(response.data[0].minimumPrice)
         setLoading(false);
         setError(false);
       })
@@ -141,7 +142,7 @@ const JobDetails = () => {
       <span>Expired</span>
         </div>}
         <h3 className="pt-5">
-          <span className="font-bold">Job Title:</span> <span>{jobTitle}</span>{" "}
+          <span className="font-bold">Job Title:</span> <span>{jobTitle}</span>
         </h3>
         <p>
           <span className="font-bold">Deadline:</span> <span className={isDateOver && 'text-red-600 font-bold'}>{date}</span>
@@ -150,7 +151,7 @@ const JobDetails = () => {
           <span className="font-bold">Category:</span> <span>{Category}</span>
         </p>
         <p>
-          <span className="font-bold">Salary Range:</span>{" "}
+          <span className="font-bold">Salary Range:</span>
           <span>
             ${minimumPrice} - ${maximumPrice}
           </span>
@@ -159,7 +160,7 @@ const JobDetails = () => {
           <span className="font-bold">Location:</span> <span>{location}</span>
         </p>
         <p>
-          <span className="font-bold">Job Type::</span> <span>{jobType}</span>{" "}
+          <span className="font-bold">Job Type::</span> <span>{jobType}</span>
         </p>
         <h3 className="font-bold text-2xl mt-5">Job Description</h3>
         <p>{Description}</p>
@@ -170,7 +171,7 @@ const JobDetails = () => {
         <h3 className="font-bold text-2xl mt-10">Place Your Bid Form</h3>
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
           <div className="flex flex-col space-y-2">
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price">Bid Amount $</label>
             <input
               type="number"
               id="price"
@@ -186,8 +187,8 @@ const JobDetails = () => {
           <div className="flex flex-col space-y-2">
             <label htmlFor="deadline">Deadline</label>
             <DatePicker
-              selected={deadline}
-              onChange={(date) => setDeadline(date)}
+              selected={new Date(date)}
+              readOnly
               required
               className="border-[1px] border-solid border-gray-300 rounded-md px-5 py-3"
             />
