@@ -22,3 +22,33 @@ jobFusion is an online job marketplace that connects job seekers and employers. 
 * Tailwind CSS
 * Framer Motion
 
+## Getting Started
+### Prerequisites
+* Node.js and npm installed on your machine.
+* Firebase project for authentication.
+
+### Installation
+1. Clone the repository:
+
+git clone https://github.com/billalhossain2/crud-with-auth-client-side.git
+
+2. Install dependencies: 
+
+cd crud-with-auth-client-side
+
+npm install
+
+## Configuration
+1. Create a .env file in the root directory with the following:
+
+REACT_APP_FIREBASE_API_KEY=YOUR_FIREBASE_API_KEY
+REACT_APP_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
+
+#Add any other configuration variables
+
+## Usage
+1. Start the development server:
+
+2. Open your browser and visit http://localhost:3000.
+
+
